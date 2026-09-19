@@ -2,6 +2,16 @@
 
 這份文件主要是用來快速設定 WSL 2 上的 Ubuntu 22 環境，包含了常用的工具和配置。
 
+## 使用前請先確認
+
+這是一份**版本敏感且帶有個人偏好的環境設定指南**，不是所有 WSL 使用者都必須照做的官方安裝清單。
+
+- 先確認你的 Windows、WSL、Ubuntu 版本與 CPU 架構。
+- 標示為個人偏好的字型、shell、工具與 alias，可以自行略過。
+- 任何會改寫 sudo、shell profile、SSH key、系統檔案或從網路下載並直接執行程式的指令，都應先理解內容與回復方式。
+- 指令若與目前官方文件不同，以目前官方文件與實際版本為準。
+- 維護與驗證原則見 [MAINTENANCE.md](MAINTENANCE.md)。
+
 ## 設定 Windows Terminal 終端機環境
 
 設定 WSL + Ubuntu 22 環境的第一步就是選一個好用的終端機環境，這樣可以讓你在 Windows 上更方便地使用 WSL。
@@ -137,6 +147,9 @@ sudo apt update && sudo apt upgrade -y
 
 ### 設定無密碼變身 `root` 執行
 
+> [!WARNING]
+> 這會讓指定使用者在 WSL 內執行 `sudo` 時不再要求密碼，等於明顯降低本機提權的摩擦與保護。只有在你理解風險、這是個人受控開發環境、且確實需要時才使用；一般情況保留 sudo 密碼會更保守。
+
 ```sh
 # sudoers
 echo "will ALL=(ALL:ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/will
@@ -158,6 +171,9 @@ sudo ln -sf /usr/share/zoneinfo/Asia/Taipei /etc/localtime \
 ```
 
 ### 安裝常用的工具
+
+> [!CAUTION]
+> 下方部分安裝方式會從遠端下載程式、安裝腳本或預編譯 binary。執行前確認網址、CPU 架構與專案官方安裝方式；對 `curl | sh` 類型指令，若環境要求較高的供應鏈安全，先下載、檢查內容／checksum，再執行。
 
 這些工具可以幫助你更方便地使用 Linux 環境，特別是對於開發者來說，這些工具都是必不可少的。
 
